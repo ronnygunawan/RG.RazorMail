@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<OutputType>Library</OutputType>
+		<SignAssembly>False</SignAssembly>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Authors>Ronny Gunawan</Authors>
+		<Description>Render email using Razor views</Description>
+		<Copyright>(C) 2022 Ronny Gunawan</Copyright>
+		<PackageProjectUrl>https://github.com/ronnygunawan/RG.RazorMail</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/ronnygunawan/RG.RazorMail</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<Version>1.0.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="PreMailer.Net" Version="2.4.0" />
+		<PackageReference Include="RazorLight" Version="2.0.0-rc.6" />
+	</ItemGroup>
+
+</Project>
