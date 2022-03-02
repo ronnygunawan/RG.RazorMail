@@ -13,7 +13,7 @@ services.AddRazorMail(options => {
 ```
 
 #### 2. Set `PreserveCompilationContext` to `true` in your `.csproj` file
-```
+```xml
 <PropertyGroup>
   <PreserveCompilationContext>true</PreserveCompilationContext>
 </PropertyGroup>
@@ -22,7 +22,7 @@ services.AddRazorMail(options => {
 #### 3. Set build action of your razor views to `EmbeddedResource`
 
 #### 4. Use relative path of your razor views as viewName
-```
+```cs
 string html = await _razorMail.RenderAsync("Views/Home/Index.cshtml", model);
 ```
 
