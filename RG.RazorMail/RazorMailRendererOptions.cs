@@ -2,6 +2,6 @@
 
 namespace RG.RazorMail {
 	public class RazorMailRendererOptions {
-		public Assembly? ViewsAssembly { get; set; }
+		public required Assembly ViewsAssembly { get; set; }
 	}
 }
