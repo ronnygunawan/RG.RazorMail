@@ -7,11 +7,11 @@ using RazorLight;
 
 namespace RG.RazorMail {
 	public class RazorMailRenderer {
-		private readonly RazorLightEngine _razorLightEngine;
+		private readonly IRazorLightEngine _razorLightEngine;
 		private readonly RazorMailRendererOptions _options;
 
 		public RazorMailRenderer(
-			RazorLightEngine razorLightEngine,
+			IRazorLightEngine razorLightEngine,
 			IOptions<RazorMailRendererOptions> optionsAccessor
 		) {
 			_razorLightEngine = razorLightEngine;
@@ -24,7 +24,7 @@ namespace RG.RazorMail {
 				Success: true,
 				Template: {
 					Key: { } templateKey,
-					TemplatePageFactory: { } templatePageFactory
+					TemplatePageFactory: { } templatePageFactory	
 				}
 			}) {
 				// Create template page
@@ -63,7 +63,8 @@ namespace RG.RazorMail {
 				removeStyleElements: true,
 				css: css,
 				stripIdAndClassAttributes: true,
-				removeComments: true
+				removeComments: true,
+				ignoreElements: "[data-premailer=\"ignore\"]"
 			).Html;
 		}
 

@@ -9,13 +9,13 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Ronny Gunawan</Authors>
 		<Description>Render email using Razor views</Description>
-		<Copyright>(C) 2022 Ronny Gunawan</Copyright>
+		<Copyright>(C) 2022-2023 Ronny Gunawan</Copyright>
 		<PackageProjectUrl>https://github.com/ronnygunawan/RG.RazorMail</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ronnygunawan/RG.RazorMail</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
@@ -28,7 +28,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="PreMailer.Net" Version="2.4.0" />
-		<PackageReference Include="RazorLight" Version="2.3.0" />
+		<PackageReference Include="RazorLight" Version="2.3.1" />
 	</ItemGroup>
 
 </Project>

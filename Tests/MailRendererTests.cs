@@ -55,6 +55,31 @@ namespace Tests {
 		}
 
 		[Fact]
+		public async Task CanPreserveStyleTagUsingDataPremailerIgnoreAsync() {
+			ServiceCollection services = new();
+			services.AddRazorMail(options => {
+				options.ViewsAssembly = typeof(MailRendererTests).Assembly;
+			});
+			using ServiceProvider serviceProvider = services.BuildServiceProvider();
+			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
+			razorMailRenderer.Should().NotBeNull();
+			string html = await razorMailRenderer.RenderAndInlineCssAsync("Views/HelloCustomFont.cshtml", new HelloWorldViewModel("John"));
+			html.Should().Be(
+				"<html><head>\n" +
+				"        <title>Hello Custom Font</title>\n" +
+				"        <style type=\"text/css\" data-premailer=\"ignore\">\n" +
+				"            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');\n" +
+				"        </style>\n" +
+				"        \n" +
+				"    </head>\n" +
+				"    <body>\n" +
+				"        <p style=\"color: darkslategray;font-family: 'Poppins', sans-serif\">Hello John</p>\n" +
+				"    \n" +
+				"</body></html>"
+			);
+		}
+
+		[Fact]
 		public async Task CanRenderToStringAndInjectCssAsync() {
 			ServiceCollection services = new();
 			services.AddRazorMail(options => {

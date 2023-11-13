@@ -1,0 +1,16 @@
+﻿@using Tests.ViewModels
+@model HelloWorldViewModel
+<html>
+    <head>
+        <title>Hello Custom Font</title>
+        <style type="text/css" data-premailer="ignore">
+            @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+        </style>
+        <style>
+            p { color: darkslategray; font-family: 'Poppins', sans-serif; }
+        </style>
+    </head>
+    <body>
+        <p>Hello @Model.Name</p>
+    </body>
+</html>
