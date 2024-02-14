@@ -1,20 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.Web.HtmlRendering;
 using Microsoft.Extensions.Options;
 using RazorLight;
 
 namespace RG.RazorMail {
 	public class RazorMailRenderer {
 		private readonly IRazorLightEngine _razorLightEngine;
+		private readonly HtmlRenderer _htmlRenderer;
 		private readonly RazorMailRendererOptions _options;
 
 		public RazorMailRenderer(
 			IRazorLightEngine razorLightEngine,
+			HtmlRenderer htmlRenderer,
 			IOptions<RazorMailRendererOptions> optionsAccessor
 		) {
 			_razorLightEngine = razorLightEngine;
+			_htmlRenderer = htmlRenderer;
 			_options = optionsAccessor.Value;
 		}
 
@@ -55,6 +62,14 @@ namespace RG.RazorMail {
 
 			// Compile view template, cache, render page, then return rendered page
 			return await _razorLightEngine.CompileRenderStringAsync(viewName, viewTemplate, model);
+		}
+
+		public async Task<string> RenderComponentAsync<TComponent>(IDictionary<string, object?> parameters) where TComponent : IComponent {
+			return await _htmlRenderer.Dispatcher.InvokeAsync(async () => {
+				ParameterView parameterView = ParameterView.FromDictionary(parameters);
+				HtmlRootComponent rootComponent = await _htmlRenderer.RenderComponentAsync<TComponent>(parameterView);
+				return rootComponent.ToHtmlString();
+			});
 		}
 
 		public string InlineCss(string html, string? css = null) {

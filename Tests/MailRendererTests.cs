@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using RG.RazorMail;
+using Tests.Components;
 using Tests.ViewModels;
 using Xunit;
 
@@ -29,6 +31,19 @@ namespace Tests {
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
 			razorMailRenderer.Should().NotBeNull();
 			string html = await razorMailRenderer.RenderAsync("Views/HelloWorld.cshtml", new HelloWorldViewModel("John"));
+			html.Should().Be("<p>Hello John</p>");
+		}
+
+		[Fact]
+		public async Task CanRenderComponentToStringAsync() {
+			ServiceCollection services = new();
+			services.AddRazorMail();
+			using ServiceProvider serviceProvider = services.BuildServiceProvider();
+			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
+			razorMailRenderer.Should().NotBeNull();
+			string html = await razorMailRenderer.RenderComponentAsync<HelloWorld>(new Dictionary<string, object?> {
+				{ "Name", "John" }
+			});
 			html.Should().Be("<p>Hello John</p>");
 		}
 
