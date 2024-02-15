@@ -106,5 +106,21 @@ namespace Tests {
 			string html = await razorMailRenderer.RenderAndInlineCssAsync("Views/HelloWorld.cshtml", new HelloWorldViewModel("John"), css: "p { color: darkslategray; }");
 			html.Should().Be("<html><head></head><body><p style=\"color: darkslategray\">Hello John</p></body></html>");
 		}
+
+		[Fact]
+		public async Task CanRenderComponentToStringAndInjectCssAsync() {
+			ServiceCollection services = new();
+			services.AddRazorMail();
+			using ServiceProvider serviceProvider = services.BuildServiceProvider();
+			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
+			razorMailRenderer.Should().NotBeNull();
+			string html = await razorMailRenderer.RenderComponentAndInlineCssAsync<HelloWorld>(
+				parameters: new Dictionary<string, object?> {
+					{ "Name", "John" }
+				},
+				css: "p { color: darkslategray; }"
+			);
+			html.Should().Be("<html><head></head><body><p style=\"color: darkslategray\">Hello John</p></body></html>");
+		}
 	}
 }

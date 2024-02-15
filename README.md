@@ -5,25 +5,36 @@
 Render razor view to html and inline css. This library simply wraps [RazorLight](https://github.com/toddams/RazorLight/) and [PreMailer.Net](https://github.com/milkshakesoftware/PreMailer.Net/)
 
 ## Setup
-#### 1. Add to service collection
+
+### 1. For Rendering `.cshtml` Views
+
+#### 1.1. Add to service collection
 ```cs
 services.AddRazorMail(options => {
     options.ViewAssembly = Assembly.GetEntryAssembly();
 });
 ```
 
-#### 2. Set `PreserveCompilationContext` to `true` in your `.csproj` file
+#### 1.2. Set `PreserveCompilationContext` to `true` in your `.csproj` file
 ```xml
 <PropertyGroup>
   <PreserveCompilationContext>true</PreserveCompilationContext>
 </PropertyGroup>
 ```
 
-#### 3. Set build action of your razor views to `EmbeddedResource`
+#### 1.3. Set build action of your razor views to `EmbeddedResource`
 
-#### 4. Use relative path of your razor views as viewName
+#### 1.4. Use relative path of your razor views as viewName
 ```cs
 string html = await _razorMail.RenderAsync("Views/Home/Index.cshtml", model);
+```
+
+### 2. For Rendering `.razor` Components
+
+#### 2.1. Add to service collection
+
+```cs
+services.AddRazorMail();
 ```
 
 ## Available methods
@@ -32,8 +43,14 @@ string html = await _razorMail.RenderAsync("Views/Home/Index.cshtml", model);
 // Render razor view to string
 Task<string> RenderAsync<T>(string viewName, T model);
 
+// Render razor component to string
+Task<string> RenderComponentAsync<TComponent>(IDictionary<string, object>? parameters);
+
 // Render razor view to string and inline css
 Task<string> RenderAndInlineCssAsync<T>(string viewName, T model, string? css = null);
+
+// Render razor component to string and inline css
+Task<string> RenderComponentAndInlineCssAsync<TComponent>(IDictionary<string, object>? parameters, string? css = null);
 
 // Inline css only
 string InlineCss(string html, string? css = null);
