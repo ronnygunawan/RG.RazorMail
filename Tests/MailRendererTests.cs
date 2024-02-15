@@ -70,6 +70,23 @@ namespace Tests {
 		}
 
 		[Fact]
+		public async Task CanRenderComponentToStringAndInlineCssAsync() {
+			ServiceCollection services = new();
+			services.AddRazorMail();
+			using ServiceProvider serviceProvider = services.BuildServiceProvider();
+			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
+			razorMailRenderer.Should().NotBeNull();
+			string html = await razorMailRenderer.RenderComponentAndInlineCssAsync<HelloCss>(new Dictionary<string, object?> {
+				{ "Name", "John" }
+			});
+			html.Should().Be(
+				"<html><head><title>Hello Css</title>\n" +
+				"        </head>\n" +
+				"    <body><p style=\"color: darkslategray\">Hello John</p></body></html>"
+			);
+		}
+
+		[Fact]
 		public async Task CanPreserveStyleTagUsingDataPremailerIgnoreAsync() {
 			ServiceCollection services = new();
 			services.AddRazorMail(options => {

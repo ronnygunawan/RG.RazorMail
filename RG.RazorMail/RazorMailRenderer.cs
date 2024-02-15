@@ -88,7 +88,7 @@ namespace RG.RazorMail {
 		public async Task<string> RenderComponentAsync<TComponent>(IDictionary<string, object?> parameters) where TComponent : IComponent {
 			return await _htmlRenderer.Dispatcher.InvokeAsync(async () => {
 				ParameterView parameterView = ParameterView.FromDictionary(parameters);
-				HtmlRootComponent rootComponent = await _htmlRenderer.RenderComponentAsync<TComponent>(parameterView);
+				HtmlRootComponent rootComponent = await _htmlRenderer.RenderComponentAsync(typeof(TComponent), parameterView);
 				return rootComponent.ToHtmlString();
 			});
 		}
