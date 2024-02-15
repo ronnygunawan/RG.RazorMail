@@ -25,7 +25,7 @@ namespace RG.RazorMail {
 			if (setupAction != null) {
 				services.Configure(setupAction);
 			}
-			services.AddSingleton<HtmlRenderer>();
+			services.AddScoped<HtmlRenderer>();
 			services.AddTransient<RazorMailRenderer>();
 			return services;
 		}
