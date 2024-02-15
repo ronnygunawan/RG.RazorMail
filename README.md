@@ -55,3 +55,15 @@ Task<string> RenderComponentAndInlineCssAsync<TComponent>(IDictionary<string, ob
 // Inline css only
 string InlineCss(string html, string? css = null);
 ```
+
+## Benchmark Results
+
+Intel Core i7-10700 CPU 2.90GHz, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 8.0.101
+
+| Method                           | Mean       | Error      | StdDev     | Rank | Gen0   | Gen1   | Allocated |
+|--------------------------------- |-----------:|-----------:|-----------:|-----:|-------:|-------:|----------:|
+| 'Render .cshtml View'            |  67.514 us |  0.8551 us |  0.5088 us |    3 | 0.8545 |      - |   7.06 KB |
+| 'Render .razor Component'        |   2.808 us |  0.1450 us |  0.0759 us |    1 | 0.1984 | 0.0648 |   1.64 KB |
+| 'Render+Inline .cshtml View'     | 184.443 us | 83.4985 us | 55.2291 us |    4 | 6.8359 | 0.4883 |  59.22 KB |
+| 'Render+Inline .razor Component' |  43.990 us |  1.3244 us |  0.6927 us |    2 | 5.8594 | 1.7090 |  48.73 KB |
