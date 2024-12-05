@@ -22,6 +22,20 @@ namespace Tests {
 		}
 
 		[Fact]
+		public void CanBeRegisteredTwice() {
+			ServiceCollection services = new();
+			services.AddRazorMail(options => {
+				options.ViewsAssembly = Assembly.GetEntryAssembly();
+			});
+			services.AddRazorMail(options => {
+				options.ViewsAssembly = Assembly.GetEntryAssembly();
+			});
+			using ServiceProvider serviceProvider = services.BuildServiceProvider();
+			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
+			razorMailRenderer.Should().NotBeNull();
+		}
+
+		[Fact]
 		public async Task CanRenderToStringAsync() {
 			ServiceCollection services = new();
 			services.AddRazorMail(options => {

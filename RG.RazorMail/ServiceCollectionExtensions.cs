@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using RazorLight;
 using RazorLight.Extensions;
 
@@ -25,8 +26,8 @@ namespace RG.RazorMail {
 			if (setupAction != null) {
 				services.Configure(setupAction);
 			}
-			services.AddScoped<HtmlRenderer>();
-			services.AddTransient<RazorMailRenderer>();
+			services.TryAddScoped<HtmlRenderer>();
+			services.TryAddTransient<RazorMailRenderer>();
 			return services;
 		}
 	}
