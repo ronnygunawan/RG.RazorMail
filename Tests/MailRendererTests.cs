@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
 using RG.RazorMail;
 using Tests.Components;
@@ -18,7 +18,7 @@ namespace Tests {
 			});
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 		}
 
 		[Fact]
@@ -32,7 +32,7 @@ namespace Tests {
 			});
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 		}
 
 		[Fact]
@@ -43,9 +43,9 @@ namespace Tests {
 			});
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 			string html = await razorMailRenderer.RenderAsync("Views/HelloWorld.cshtml", new HelloWorldViewModel("John"));
-			html.Should().Be("<p>Hello John</p>");
+			html.ShouldBe("<p>Hello John</p>");
 		}
 
 		[Fact]
@@ -54,11 +54,11 @@ namespace Tests {
 			services.AddRazorMail();
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 			string html = await razorMailRenderer.RenderComponentAsync<HelloWorld>(new Dictionary<string, object?> {
 				{ "Name", "John" }
 			});
-			html.Should().Be("<p>Hello John</p>");
+			html.ShouldBe("<p>Hello John</p>");
 		}
 
 		[Fact]
@@ -69,9 +69,9 @@ namespace Tests {
 			});
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 			string html = await razorMailRenderer.RenderAndInlineCssAsync("Views/HelloCss.cshtml", new HelloWorldViewModel("John"));
-			html.Should().Be(
+			html.ShouldBe(
 				"<html><head>\n" +
 				"        <title>Hello Css</title>\n" +
 				"        \n" +        
@@ -89,11 +89,11 @@ namespace Tests {
 			services.AddRazorMail();
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 			string html = await razorMailRenderer.RenderComponentAndInlineCssAsync<HelloCss>(new Dictionary<string, object?> {
 				{ "Name", "John" }
 			});
-			html.Should().Be(
+			html.ShouldBe(
 				"<html><head><title>Hello Css</title>\n" +
 				"        </head>\n" +
 				"    <body><p style=\"color: darkslategray\">Hello John</p></body></html>"
@@ -108,9 +108,9 @@ namespace Tests {
 			});
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 			string html = await razorMailRenderer.RenderAndInlineCssAsync("Views/HelloCustomFont.cshtml", new HelloWorldViewModel("John"));
-			html.Should().Be(
+			html.ShouldBe(
 				"<html><head>\n" +
 				"        <title>Hello Custom Font</title>\n" +
 				"        <style type=\"text/css\" data-premailer=\"ignore\">\n" +
@@ -133,9 +133,9 @@ namespace Tests {
 			});
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 			string html = await razorMailRenderer.RenderAndInlineCssAsync("Views/HelloWorld.cshtml", new HelloWorldViewModel("John"), css: "p { color: darkslategray; }");
-			html.Should().Be("<html><head></head><body><p style=\"color: darkslategray\">Hello John</p></body></html>");
+			html.ShouldBe("<html><head></head><body><p style=\"color: darkslategray\">Hello John</p></body></html>");
 		}
 
 		[Fact]
@@ -144,14 +144,14 @@ namespace Tests {
 			services.AddRazorMail();
 			using ServiceProvider serviceProvider = services.BuildServiceProvider();
 			RazorMailRenderer razorMailRenderer = serviceProvider.GetRequiredService<RazorMailRenderer>();
-			razorMailRenderer.Should().NotBeNull();
+			razorMailRenderer.ShouldNotBeNull();
 			string html = await razorMailRenderer.RenderComponentAndInlineCssAsync<HelloWorld>(
 				parameters: new Dictionary<string, object?> {
 					{ "Name", "John" }
 				},
 				css: "p { color: darkslategray; }"
 			);
-			html.Should().Be("<html><head></head><body><p style=\"color: darkslategray\">Hello John</p></body></html>");
+			html.ShouldBe("<html><head></head><body><p style=\"color: darkslategray\">Hello John</p></body></html>");
 		}
 	}
 }
