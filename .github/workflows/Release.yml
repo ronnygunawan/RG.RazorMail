@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+    
+    - name: Extract version from tag
+      id: get_version
+      run: |
+        # Remove 'v' prefix if present (e.g., v1.9.2 -> 1.9.2)
+        VERSION=${GITHUB_REF#refs/tags/}
+        VERSION=${VERSION#v}
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Package version will be: $VERSION"
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build RG.RazorMail/RG.RazorMail.csproj --configuration Release --no-restore -p:Version=${{ steps.get_version.outputs.version }}
+    
+    - name: Pack
+      run: dotnet pack RG.RazorMail/RG.RazorMail.csproj --configuration Release --no-build -p:Version=${{ steps.get_version.outputs.version }}
+    
+    - name: Publish to NuGet
+      run: dotnet nuget push RG.RazorMail/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
