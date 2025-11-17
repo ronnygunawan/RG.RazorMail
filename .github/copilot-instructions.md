@@ -44,7 +44,7 @@ RG.RazorMail is a .NET library for rendering Razor views (.cshtml) and Razor com
 - Test files should be marked as EmbeddedResource
 - Tests verify both .cshtml and .razor rendering
 - Test CSS inlining functionality
-- Use FluentAssertions for assertions
+- Use Shouldly for assertions
 
 ## Building and Testing
 ```bash
