@@ -77,3 +77,13 @@ Intel Core i7-10700 CPU 2.90GHz, 1 CPU, 16 logical and 8 physical cores
 | 'Render .razor Component'        |  4.108 us | 1.4003 us | 0.9262 us |    1 | 0.1907 | 0.0610 |   1.59 KB |
 | 'Render+Inline .cshtml View'     | 76.252 us | 8.5756 us | 4.4852 us |    4 | 7.3242 | 0.4883 |  59.86 KB |
 | 'Render+Inline .razor Component' | 37.275 us | 5.6494 us | 3.3619 us |    3 | 6.1035 | 1.4648 |  51.13 KB |
+
+AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.100
+
+| Method                           | Mean       | Error     | StdDev    | Rank | Gen0   | Gen1   | Allocated |
+|--------------------------------- |-----------:|----------:|----------:|-----:|-------:|-------:|----------:|
+| 'Render .cshtml View'            |  26.301 us | 0.2010 us | 0.1330 us |    2 | 0.4272 |      - |   7.01 KB |
+| 'Render .razor Component'        |   2.265 us | 0.0945 us | 0.0562 us |    1 | 0.0877 | 0.0420 |   1.45 KB |
+| 'Render+Inline .cshtml View'     | 119.993 us | 9.7699 us | 5.1098 us |    4 | 3.9063 |      - |  65.33 KB |
+| 'Render+Inline .razor Component' |  54.033 us | 0.8433 us | 0.4411 us |    3 | 3.1738 | 0.7324 |  55.04 KB |
